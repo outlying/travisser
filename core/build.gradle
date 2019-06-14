@@ -1,0 +1,9 @@
+apply plugin: 'java-library'
+S.feature(this, "kotlin")
+
+dependencies {
+
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
