@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 S.feature(this, "kotlin")
 
 dependencies {
-
+    implementation "com.squareup.retrofit2:retrofit:2.6.0"
 }
 
 sourceCompatibility = "7"
