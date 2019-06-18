@@ -1,8 +1,12 @@
 package com.antyzero.travisser.core.repository
 
-class StandardRepository : Repository {
+import com.antyzero.travisser.core.api.TravisApi
+
+class StandardRepository(
+    private val travisApi: TravisApi
+) : Repository {
 
     override fun buildList() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

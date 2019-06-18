@@ -7,23 +7,41 @@ interface TravisApi {
 
     companion object {
 
-        fun create() {
+        const val URL = "https://api.travis-ci.com/"
+
+        /**
+         *
+         */
+        fun create(okHttpClient: OkHttpClient) {
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://api.travis-ci.com/")
-                .client(createClient("asd"))
+                .baseUrl(URL)
+                .client(okHttpClient)
                 .build()
-
         }
 
-        private fun createClient(token: String) = OkHttpClient.Builder()
+        /**
+         *
+         */
+        fun configureClient(okHttpClient: OkHttpClient.Builder, tokenProvider: TokenProvider) = okHttpClient
             .addNetworkInterceptor {
+
+                // TODO compare
+
                 val request = it.request().newBuilder()
-                    .addHeader("Authorization", "token $token")
+                    .addHeader("Authorization", "token ${tokenProvider.provideTravisApiToken()}")
                     .build()
 
                 it.proceed(request)
             }
             .build()
+    }
+
+    /**
+     * Provides token for requests
+     */
+    interface TokenProvider {
+
+        fun provideTravisApiToken()
     }
 }
