@@ -2,9 +2,10 @@ package com.antyzero.travisser.core.api.model
 
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-data class
-BuildsResponse(
+// @JsonClass(generateAdapter = true)
+data class ActiveResponse(
     @Json(name = "builds")
     val builds: List<Build>,
     @Json(name = "@type")
@@ -12,58 +13,9 @@ BuildsResponse(
     @Json(name = "@href")
     val href: String,
     @Json(name = "@representation")
-    val representation: String,
-    @Json(name = "pagination")
-    val pagination: Pagination
+    val representation: String
 ) {
-    data class Pagination(
-        @Json(name = "count")
-        val count: Int,
-        @Json(name = "first")
-        val first: First,
-        @Json(name = "is_first")
-        val isFirst: Boolean,
-        @Json(name = "is_last")
-        val isLast: Boolean,
-        @Json(name = "last")
-        val last: Last,
-        @Json(name = "limit")
-        val limit: Int,
-        @Json(name = "next")
-        val next: Next,
-        @Json(name = "offset")
-        val offset: Int,
-        @Json(name = "prev")
-        val prev: Any
-    ) {
-        data class Next(
-            @Json(name = "limit")
-            val limit: Int,
-            @Json(name = "offset")
-            val offset: Int,
-            @Json(name = "@href")
-            val href: String
-        )
-
-        data class First(
-            @Json(name = "limit")
-            val limit: Int,
-            @Json(name = "offset")
-            val offset: Int,
-            @Json(name = "@href")
-            val href: String
-        )
-
-        data class Last(
-            @Json(name = "limit")
-            val limit: Int,
-            @Json(name = "offset")
-            val offset: Int,
-            @Json(name = "@href")
-            val href: String
-        )
-    }
-
+    // @JsonClass(generateAdapter = true)
     data class Build(
         @Json(name = "private")
         val `private`: Boolean,
@@ -74,11 +26,11 @@ BuildsResponse(
         @Json(name = "created_by")
         val createdBy: CreatedBy,
         @Json(name = "duration")
-        val duration: Int,
+        val duration: Any,
         @Json(name = "event_type")
         val eventType: String,
         @Json(name = "finished_at")
-        val finishedAt: String,
+        val finishedAt: Any,
         @Json(name = "id")
         val id: Int,
         @Json(name = "jobs")
@@ -109,9 +61,10 @@ BuildsResponse(
         val href: String,
         @Json(name = "@representation")
         val representation: String,
-        @Json(name = "permissions ")
+        @Json(name = "@permissions")
         val permissions: Permissions
     ) {
+        // @JsonClass(generateAdapter = true)
         data class Permissions(
             @Json(name = "cancel")
             val cancel: Boolean,
@@ -121,17 +74,7 @@ BuildsResponse(
             val restart: Boolean
         )
 
-        data class Job(
-            @Json(name = "id")
-            val id: Int,
-            @Json(name = "@type")
-            val type: String,
-            @Json(name = "@href")
-            val href: String,
-            @Json(name = "@representation")
-            val representation: String
-        )
-
+        // @JsonClass(generateAdapter = true)
         data class Repository(
             @Json(name = "id")
             val id: Int,
@@ -147,11 +90,10 @@ BuildsResponse(
             val representation: String
         )
 
-        data class CreatedBy(
+        // @JsonClass(generateAdapter = true)
+        data class Job(
             @Json(name = "id")
             val id: Int,
-            @Json(name = "login")
-            val login: String,
             @Json(name = "@type")
             val type: String,
             @Json(name = "@href")
@@ -160,17 +102,7 @@ BuildsResponse(
             val representation: String
         )
 
-        data class Branch(
-            @Json(name = "name")
-            val name: String,
-            @Json(name = "@type")
-            val type: String,
-            @Json(name = "@href")
-            val href: String,
-            @Json(name = "@representation")
-            val representation: String
-        )
-
+        // @JsonClass(generateAdapter = true)
         data class Commit(
             @Json(name = "committed_at")
             val committedAt: String,
@@ -186,6 +118,32 @@ BuildsResponse(
             val sha: String,
             @Json(name = "@type")
             val type: String,
+            @Json(name = "@representation")
+            val representation: String
+        )
+
+        // @JsonClass(generateAdapter = true)
+        data class CreatedBy(
+            @Json(name = "id")
+            val id: Int,
+            @Json(name = "login")
+            val login: String,
+            @Json(name = "@type")
+            val type: String,
+            @Json(name = "@href")
+            val href: String,
+            @Json(name = "@representation")
+            val representation: String
+        )
+
+        // @JsonClass(generateAdapter = true)
+        data class Branch(
+            @Json(name = "name")
+            val name: String,
+            @Json(name = "@type")
+            val type: String,
+            @Json(name = "@href")
+            val href: String,
             @Json(name = "@representation")
             val representation: String
         )

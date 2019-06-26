@@ -3,7 +3,16 @@ S.feature(this, "kotlin")
 
 dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.6.0"
+    implementation 'com.squareup.retrofit2:converter-moshi:2.6.0'
     implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
+
+    // TODO clean up
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.4.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.4.2")
+}
+
+test {
+    useJUnitPlatform()
 }
 
 sourceCompatibility = "7"

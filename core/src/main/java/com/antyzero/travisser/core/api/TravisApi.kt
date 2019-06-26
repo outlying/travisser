@@ -1,47 +1,42 @@
 package com.antyzero.travisser.core.api
 
+import com.antyzero.travisser.core.api.model.ActiveResponse
+import com.antyzero.travisser.core.api.model.BuildsResponse
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TravisApi {
 
-    companion object {
+    @GET("builds")
+    suspend fun builds(): BuildsResponse
 
-        const val URL = "https://api.travis-ci.com/"
+    @GET("owner/{owner}/active")
+    suspend fun active(@Path("owner") owner: String): ActiveResponse
 
-        /**
-         *
-         */
-        fun create(okHttpClient: OkHttpClient) {
+    enum class Url(internal val url: String) {
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl(URL)
-                .client(okHttpClient)
-                .build()
-        }
+        COM("https://api.travis-ci.com/"),
 
-        /**
-         *
-         */
-        fun configureClient(okHttpClient: OkHttpClient.Builder, tokenProvider: TokenProvider) = okHttpClient
-            .addNetworkInterceptor {
-
-                // TODO compare
-
-                val request = it.request().newBuilder()
-                    .addHeader("Authorization", "token ${tokenProvider.provideTravisApiToken()}")
-                    .build()
-
-                it.proceed(request)
-            }
-            .build()
+        ORG("https://api.travis-ci.org/")
     }
 
-    /**
-     * Provides token for requests
-     */
-    interface TokenProvider {
+    companion object {
 
-        fun provideTravisApiToken()
+        /**
+         *
+         */
+        fun create(okHttpClient: OkHttpClient, url: Url): TravisApi {
+
+            val retrofit = Retrofit.Builder()
+                .baseUrl(url.url)
+                .client(okHttpClient)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+
+            return retrofit.create(TravisApi::class.java)
+        }
     }
 }

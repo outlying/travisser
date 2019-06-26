@@ -4,14 +4,20 @@ if (S.isAndroid(this)) {
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-M1"
+        implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M1'
     }
-} else if(S.isJava(this)) {
+} else if (S.isJava(this)) {
     apply plugin: 'kotlin'
 
     dependencies {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-M1"
+
     }
 } else {
-    throw new IllegalStateException("Unsupported module")
+    throw new IllegalStateException("Unsupported module type")
 }
 

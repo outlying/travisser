@@ -3,18 +3,23 @@ package com.antyzero.travisser.core
 import com.antyzero.travisser.core.module.Module
 import com.antyzero.travisser.core.network.RequestTransformerManager
 import com.antyzero.travisser.core.network.StandardRequestTransformerManager
-import com.antyzero.travisser.core.section.Logged
-import com.antyzero.travisser.core.section.RebuilderLogged
+import com.antyzero.travisser.core.module.logged.Logged
+import com.antyzero.travisser.core.module.logged.RebuilderLogged
 import okhttp3.OkHttpClient
 
 
 class Travisser {
 
     private val requestTransformerManager: RequestTransformerManager = StandardRequestTransformerManager()
+
+    // TODO obviously this lacks some sort of sync access, but fuck it for now
     private var logged: RebuilderLogged? = null
 
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
+
+            System.err.println(chain.request().url())
+
             val newBuilder = chain.request().newBuilder()
             requestTransformerManager.transformers().forEach { it.invoke(newBuilder) }
             chain.proceed(newBuilder.build())
